@@ -231,31 +231,49 @@ function showLocation(id){
     highlightSelectedLocation(String(id));
 }
 
-form.addEventListener("submit", async(e)=>{
+form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    searchBtn.click();
+});
+
+
+saveBtn.addEventListener("click", async () => {
     let coord = await coordinate(place.value);
+    if (!coord) return;
+
+    const exists = locations.some(
+        loc => loc.luogo.toLowerCase() === place.value.trim().toLowerCase()
+    );
+
+    if (exists && !editingId) {
+        statusEl.innerHTML = `Il luogo "${place.value}" è già salvato!`;
+        return;
+    }
+
     const payload = {
-        luogo: place.value,
+        luogo: place.value.trim(),
         lat: coord.latitudine,
         lon: coord.longitudine,
     };
-    
-    try{
-        if(editingId){
+
+    try {
+        if (editingId) {
             await updateLocation(editingId, payload);
-        }else{
+        } else {
             await createLocation(payload);
         }
 
         editingId = null;
         form.reset();
+        statusEl.innerHTML = "";
         loadLocations();
-
-    }catch(error){
+    } catch (error) {
         console.log("Error: " + error);
-        statusEl.innerHTML = "Errore nel salvataggio."
+        statusEl.innerHTML = "Errore nel salvataggio.";
     }
 });
+
+
 
 async function createLocation(payload) {
     const response = await fetch(CRUD_URL, {
