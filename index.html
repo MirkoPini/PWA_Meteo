@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/app-icon-512.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="./manifest.json">
+    <title>Meteo</title>
+</head>
+<body>
+    <h1>Meteo</h1>
+    <p class="subtitle">Digita e salva una città e guarda le previsioni meteo.</p>
+    
+    <div class="container">
+        <!-- Colonna sinistra: Luoghi salvati e form (1/3) -->
+        <div class="left-column">
+            <section class="content_form">
+                <form id="src_form">
+                    <div class="search_box">
+                        <input type="text" id="place" placeholder="Cerca e salva un luogo">
+                        <div class="button-row">
+                            <button type="submit" id="save_button">Salva</button>
+                            <button type="button" id="src_button">Cerca</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="content_result">
+                <h2>Luoghi Salvati</h2>
+                <p id="status"></p>
+                <ul id="location_saved">
+                    <!-- Luoghi salvati verranno inseriti qui -->
+                </ul>
+            </section>
+        </div>
+        
+        <!-- Colonna destra: Risultati meteo (2/3) -->
+        <div class="right-column">
+            <section class="result_meteo">
+                <div id="meteo" class="meteo_box">
+                    <div class="welcome-message">
+                        <h3>Benvenuto nell'app Meteo</h3>
+                        <p>Cerca una città per vedere le previsioni meteo settimanali</p>
+                        <p>Salva le città che preferisci per un accesso rapido</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+
+</html>

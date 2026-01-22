@@ -1,0 +1,674 @@
+/* Reset e configurazioni base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a2980, #26d0ce);
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Contenitore principale a due colonne - 1/3 e 2/3 */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 25px;
+    max-width: 1600px;
+    margin: 0 auto;
+    min-height: calc(100vh - 40px);
+    height: 100%;
+}
+
+/* Colonna sinistra - Luoghi salvati (1/3) */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: calc(100vh - 200px);
+}
+
+/* Colonna destra - Meteo e risultati (2/3) */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: calc(100vh - 200px);
+}
+
+/* Tipografia */
+h1 {
+    text-align: center;
+    color: white;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    grid-column: 1 / -1;
+}
+
+.subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-column: 1 / -1;
+}
+
+/* Sezione ricerca - Parte superiore sinistra */
+.content_form {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    height: auto;
+}
+
+.content_form:hover {
+    transform: translateY(-5px);
+}
+
+.search_box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#place {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+#place:focus {
+    outline: none;
+    border-color: #26d0ce;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.2);
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+button {
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#save_button {
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+    color: white;
+}
+
+#save_button:hover {
+    background: linear-gradient(to right, #43A047, #1B5E20);
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+#src_button {
+    background: linear-gradient(to right, #2196F3, #0D47A1);
+    color: white;
+}
+
+#src_button:hover {
+    background: linear-gradient(to right, #1E88E5, #0D3C75);
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+}
+
+/* Sezione luoghi salvati - Parte inferiore sinistra */
+.content_result {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Importante per flex children */
+    height: calc(100vh - 350px); /* Altezza calcolata */
+}
+
+.content_result h2 {
+    color: #1a2980;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    flex-shrink: 0;
+}
+
+#status {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 15px;
+    min-height: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Lista luoghi salvati */
+#location_saved {
+    list-style-type: none;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 10px;
+    margin-top: 10px;
+    max-height: 500px;
+}
+
+#location_saved::-webkit-scrollbar {
+    width: 8px;
+}
+
+#location_saved::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#location_saved::-webkit-scrollbar-thumb {
+    background: #26d0ce;
+    border-radius: 4px;
+}
+
+#location_saved::-webkit-scrollbar-thumb:hover {
+    background: #1a9b99;
+}
+
+#location_saved li {
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border-left: 5px solid #2196F3;
+}
+
+#location_saved li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.locationCard {
+    width: 100%;
+}
+
+.location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.luogo {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a2980;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.temperatura {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #E91E63;
+    background-color: rgba(233, 30, 99, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    min-width: 80px;
+    text-align: center;
+}
+
+.location-details {
+    font-size: 0.9rem;
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 10px 0;
+}
+
+.coordinate {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.button-container button {
+    padding: 12px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.delete {
+    background: linear-gradient(to right, #F44336, #D32F2F);
+    color: white;
+}
+
+.delete:hover {
+    background: linear-gradient(to right, #E53935, #C62828);
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+}
+
+.show {
+    background: linear-gradient(to right, #FF9800, #F57C00);
+    color: white;
+}
+
+.show:hover {
+    background: linear-gradient(to right, #FB8C00, #EF6C00);
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+/* Sezione meteo risultati - Colonna destra completa */
+.result_meteo {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.meteo_box {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    flex: 1;
+    overflow-y: auto;
+    height: calc(100vh - 200px);
+}
+
+.meteo_box h2 {
+    color: #1a2980;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding-top: 10px;
+    padding-bottom: 15px;
+    z-index: 1;
+}
+
+/* Cards meteo giornaliere */
+.giorno-meteo {
+    background: linear-gradient(145deg, #ffffff, #f5f7fa);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-left: 5px solid #26d0ce;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+    align-items: center;
+}
+
+.giorno-meteo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.giorno-meteo h3 {
+    color: #1a2980;
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+    grid-column: 1 / 3;
+    grid-row: 1;
+}
+
+.giorno-meteo img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    grid-column: 1;
+    grid-row: 2 / 4;
+    justify-self: center;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.weather-details {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.temp-details {
+    grid-column: 2;
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.giorno-meteo p {
+    color: #555;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.weather-desc {
+    font-weight: 600;
+    color: #1a2980;
+    font-size: 1.2rem;
+}
+
+.temp-info {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.sun-info {
+    grid-column: 1 / 3;
+    grid-row: 4;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+/* Messaggio iniziale */
+.welcome-message {
+    text-align: center;
+    color: #666;
+    padding: 60px 40px;
+    background: linear-gradient(145deg, #f8f9fa, #ffffff);
+    border-radius: 16px;
+    border: 2px dashed #ddd;
+}
+
+.welcome-message h3 {
+    color: #1a2980;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.welcome-message p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .container {
+        grid-template-columns: 1fr 1.5fr;
+        gap: 20px;
+    }
+    
+    .giorno-meteo {
+        grid-template-columns: 120px 1fr;
+    }
+    
+    .giorno-meteo img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (min-width: 993px){
+    body {
+    background: linear-gradient(135deg, #1a2980, #26d0ce);
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+    margin: 0; 
+    height: 100%; 
+    overflow: hidden;
+    }
+}
+@media (max-width: 992px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
+    }
+    
+    .left-column {
+        grid-row: 1;
+        height: auto;
+    }
+    
+    .right-column {
+        grid-row: 2;
+        height: auto;
+    }
+    
+    .content_result {
+        height: auto;
+        max-height: 500px;
+    }
+    
+    .meteo_box {
+        height: auto;
+        max-height: 600px;
+    }
+    
+    .button-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    .container {
+        gap: 15px;
+    }
+    
+    .content_form, .content_result, .meteo_box {
+        padding: 20px;
+    }
+    
+    .giorno-meteo {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .giorno-meteo img {
+        grid-column: 1;
+        grid-row: 2;
+        width: 80px;
+        height: 80px;
+        justify-self: start;
+    }
+    
+    .weather-details {
+        grid-column: 1;
+        grid-row: 3;
+    }
+    
+    .temp-details {
+        grid-column: 1;
+        grid-row: 4;
+    }
+    
+    .sun-info {
+        grid-column: 1;
+        grid-row: 5;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .button-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .content_form, .content_result, .meteo_box {
+        padding: 15px;
+    }
+    
+    #place {
+        padding: 12px 15px;
+    }
+    
+    button {
+        padding: 12px;
+    }
+    
+    #location_saved li {
+        padding: 15px;
+    }
+    
+    .luogo {
+        font-size: 1.1rem;
+    }
+    
+    .temperatura {
+        font-size: 1.2rem;
+        padding: 6px 12px;
+    }
+}
+
+/* Animazioni */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.giorno-meteo, #location_saved li {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Effetti di caricamento */
+#status:empty {
+    display: none;
+}
+
+#status:not(:empty) {
+    color: #2196F3;
+    font-weight: 600;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Messaggio quando non ci sono luoghi salvati */
+.empty-message {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    margin-top: 20px;
+}
+
+/* Indicatore di città selezionata */
+.location-selected {
+    border-left: 5px solid #4CAF50 !important;
+    background: linear-gradient(145deg, #f1f8e9, #ffffff) !important;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2) !important;
+}
+
+/* Scrollbar personalizzata */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #26d0ce, #1a2980);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #1a2980, #26d0ce);
+}
+
+/* Effetto ombra per profondità */
+.shadow-lg {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Transizioni smooth */
+* {
+    transition: all 0.3s ease;
+}
